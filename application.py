@@ -1,10 +1,9 @@
 from flask import Flask, request
 from twilio.twiml.messaging_response import MessagingResponse
-
-import requests
-import json
+from bingmaps import Map
 
 app = Flask(__name__)
+bing_map = Map()
 
 @app.route('/')
 def index():
@@ -21,20 +20,11 @@ def directions():
         message = 'To ask for directions, enter: from: <point 1> to: <point 2>' 
     
     # Check for from: and to: in the string
-    if 'from:' in body and 'to:' in body:
-        body = body.replace('from: ', 'from:').replace('to: ', 'to:')
-        to_location = body.find('to:')
-        wp0 = body[5:to_location-1]
-        wp1 = body[to_location+3:]
-
-        message = f'wp0 is {wp0}\nwp1 is {wp1}'
+    elif 'from:' in body and 'to:' in body:
+        message = bing_map.get_directions(body)
     
     else:
         message = "I don't know what you said. Enter 'ask' for help."
-        resp.message(message)
-        return str(resp)
-
-
 
     resp.message(message)
     return str(resp)
