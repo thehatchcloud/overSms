@@ -1,9 +1,10 @@
 from flask import Flask, request
 from twilio.twiml.messaging_response import MessagingResponse
 from bingmaps import Map
+import os
 
 app = Flask(__name__)
-bing_map = Map()
+bing_map = Map(os.environ['BING_MAPS_KEY'])
 
 @app.route('/')
 def index():
