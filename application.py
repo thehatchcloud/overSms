@@ -8,7 +8,7 @@ bing_map = Map(os.environ['BING_MAPS_KEY'])
 
 @app.route('/')
 def index():
-    return 'This app returns information over text message.'
+    return '<h1>overSmsApp</h1><p>This app returns information over text message.</p>'
 
 @app.route("/directions", methods=['POST'])
 def directions():
